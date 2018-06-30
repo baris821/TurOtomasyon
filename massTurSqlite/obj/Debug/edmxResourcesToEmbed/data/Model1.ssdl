@@ -1,0 +1,175 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="massTurModel.Store" Provider="System.Data.SQLite.EF6" ProviderManifestToken="data source=C:\Users\alpaydin\Desktop\CSOtomasyon\massTurSqlite\massTurSqlite\data\massTur.db" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Donem">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="integer" Nullable="false" />
+    <Property Name="ad" Type="nvarchar" MaxLength="50" />
+    <Property Name="aktif" Type="bit" />
+  </EntityType>
+  <EntityType Name="Musteri">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TCMusteriNo" Type="nvarchar" MaxLength="50" />
+    <Property Name="turu" Type="nvarchar" MaxLength="50" />
+    <Property Name="vatandas" Type="bit" />
+    <Property Name="basvuruTipi" Type="nvarchar" MaxLength="50" />
+    <Property Name="ad" Type="nvarchar" MaxLength="100" />
+    <Property Name="soyad" Type="nvarchar" MaxLength="100" />
+    <Property Name="cinsiyet" Type="nvarchar" MaxLength="10" />
+    <Property Name="dogumYer" Type="nvarchar" MaxLength="100" />
+    <Property Name="dogumTarih" Type="datetime" />
+    <Property Name="anneAd" Type="nvarchar" MaxLength="100" />
+    <Property Name="babaAd" Type="nvarchar" MaxLength="100" />
+    <Property Name="cepTel" Type="nvarchar" MaxLength="20" />
+    <Property Name="medeniDurum" Type="nvarchar" MaxLength="50" />
+    <Property Name="acilNo" Type="nvarchar" MaxLength="20" />
+    <Property Name="acilAd" Type="nvarchar" MaxLength="200" />
+    <Property Name="acilYakinlik" Type="nvarchar" MaxLength="100" />
+    <Property Name="ogrenci" Type="bit" />
+    <Property Name="ogrenciBelge" Type="bit" />
+    <Property Name="adres" Type="nvarchar" MaxLength="500" />
+    <Property Name="faturaAdres" Type="nvarchar" MaxLength="500" />
+    <Property Name="passID" Type="integer" />
+    <Property Name="aktif" Type="bit" />
+    <Property Name="grup" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="Parkur">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="integer" Nullable="false" />
+    <Property Name="sehir" Type="nvarchar" MaxLength="50" />
+    <Property Name="ulasim" Type="nvarchar" MaxLength="50" />
+    <Property Name="sira" Type="int" />
+    <Property Name="konaklama" Type="bit" />
+    <Property Name="TurID" Type="integer" />
+  </EntityType>
+  <EntityType Name="Sezon">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="integer" Nullable="false" />
+    <Property Name="ad" Type="nvarchar" MaxLength="50" />
+    <Property Name="aktif" Type="bit" />
+  </EntityType>
+  <EntityType Name="Tur">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ad" Type="nvarchar" MaxLength="100" />
+    <Property Name="tipID" Type="integer" />
+    <Property Name="kod" Type="nvarchar" MaxLength="50" />
+    <Property Name="kapasite" Type="int" />
+    <Property Name="sezonID" Type="integer" />
+    <Property Name="basTarih" Type="datetime" />
+    <Property Name="bitTarih" Type="datetime" />
+    <Property Name="durum" Type="nvarchar" MaxLength="100" />
+    <Property Name="ulke" Type="nvarchar" MaxLength="100" />
+    <Property Name="sehir" Type="nvarchar" MaxLength="100" />
+    <Property Name="donemID" Type="integer" />
+    <Property Name="aciklama" Type="nvarchar" MaxLength="500" />
+    <Property Name="kesinKayitLimit" Type="int" />
+    <Property Name="aktif" Type="bit" />
+  </EntityType>
+  <EntityType Name="Tur_Musteri">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="turID" Type="integer" />
+    <Property Name="musteriID" Type="integer" />
+  </EntityType>
+  <Association Name="FK_Parkur_0_0">
+    <End Role="Tur" Type="Self.Tur" Multiplicity="0..1" />
+    <End Role="Parkur" Type="Self.Parkur" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tur">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Parkur">
+        <PropertyRef Name="TurID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tur_0_0">
+    <End Role="Donem" Type="Self.Donem" Multiplicity="0..1" />
+    <End Role="Tur" Type="Self.Tur" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Donem">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Tur">
+        <PropertyRef Name="donemID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tur_1_0">
+    <End Role="Sezon" Type="Self.Sezon" Multiplicity="0..1" />
+    <End Role="Tur" Type="Self.Tur" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sezon">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Tur">
+        <PropertyRef Name="sezonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tur_Musteri_0_0">
+    <End Role="Musteri" Type="Self.Musteri" Multiplicity="0..1" />
+    <End Role="Tur_Musteri" Type="Self.Tur_Musteri" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Musteri">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Tur_Musteri">
+        <PropertyRef Name="musteriID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tur_Musteri_1_0">
+    <End Role="Tur" Type="Self.Tur" Multiplicity="0..1" />
+    <End Role="Tur_Musteri" Type="Self.Tur_Musteri" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tur">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Tur_Musteri">
+        <PropertyRef Name="turID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="massTurModelStoreContainer">
+    <EntitySet Name="Donem" EntityType="Self.Donem" store:Type="Tables" />
+    <EntitySet Name="Musteri" EntityType="Self.Musteri" store:Type="Tables" />
+    <EntitySet Name="Parkur" EntityType="Self.Parkur" store:Type="Tables" />
+    <EntitySet Name="Sezon" EntityType="Self.Sezon" store:Type="Tables" />
+    <EntitySet Name="Tur" EntityType="Self.Tur" store:Type="Tables" />
+    <EntitySet Name="Tur_Musteri" EntityType="Self.Tur_Musteri" store:Type="Tables" />
+    <AssociationSet Name="FK_Parkur_0_0" Association="Self.FK_Parkur_0_0">
+      <End Role="Tur" EntitySet="Tur" />
+      <End Role="Parkur" EntitySet="Parkur" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tur_0_0" Association="Self.FK_Tur_0_0">
+      <End Role="Donem" EntitySet="Donem" />
+      <End Role="Tur" EntitySet="Tur" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tur_1_0" Association="Self.FK_Tur_1_0">
+      <End Role="Sezon" EntitySet="Sezon" />
+      <End Role="Tur" EntitySet="Tur" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tur_Musteri_0_0" Association="Self.FK_Tur_Musteri_0_0">
+      <End Role="Musteri" EntitySet="Musteri" />
+      <End Role="Tur_Musteri" EntitySet="Tur_Musteri" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tur_Musteri_1_0" Association="Self.FK_Tur_Musteri_1_0">
+      <End Role="Tur" EntitySet="Tur" />
+      <End Role="Tur_Musteri" EntitySet="Tur_Musteri" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

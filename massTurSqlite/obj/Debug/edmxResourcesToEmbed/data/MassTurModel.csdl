@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="massTurModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Kullanici">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="kAdi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="sifre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Musteri">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TCMusteriNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="turu" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="vatandas" Type="Boolean" />
+    <Property Name="basvuruTipi" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="ad" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="soyad" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="cinsiyet" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+    <Property Name="dogumYer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="dogumTarih" Type="DateTime" Nullable="false" />
+    <Property Name="anneAd" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="babaAd" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="cepTel" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="medeniDurum" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="acilNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="acilAd" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="acilYakinlik" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ogrenci" Type="Boolean" />
+    <Property Name="ogrenciBelge" Type="Boolean" />
+    <Property Name="adres" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="faturaAdres" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="passID" Type="Int64" />
+    <Property Name="aktif" Type="Boolean" />
+    <Property Name="grup" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="TurMusteri">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="turID" Type="Int64" Nullable="false" />
+    <Property Name="musteriID" Type="Int64" Nullable="false" />
+  </EntityType>
+  <EntityContainer Name="massTurEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Kullanici" EntityType="Self.Kullanici" />
+    <EntitySet Name="Musteri" EntityType="Self.Musteri" />
+    <EntitySet Name="TurMusteri" EntityType="Self.TurMusteri" />
+    <EntitySet Name="Tur" EntityType="massTurModel.Tur" />
+  </EntityContainer>
+  <EntityType Name="Tur">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="tipID" Type="Int64" />
+    <Property Name="kod" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="kapasite" Type="Int64" />
+    <Property Name="sezonID" Type="Int64" />
+    <Property Name="basTarih" Type="DateTime" />
+    <Property Name="bitTarih" Type="DateTime" />
+    <Property Name="durum" Type="Int64" />
+    <Property Name="onKayit" Type="Boolean" />
+    <Property Name="ulke" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+    <Property Name="sehir" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+    <Property Name="donemID" Type="Int64" />
+    <Property Name="aciklama" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="kesinKayitLimit" Type="Int64" />
+    <Property Name="aktif" Type="Boolean" />
+  </EntityType>
+</Schema>

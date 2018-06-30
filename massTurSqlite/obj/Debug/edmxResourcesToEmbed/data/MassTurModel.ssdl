@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="massTurModel.Store" Provider="System.Data.SQLite.EF6" ProviderManifestToken="data source=C:\Users\alpaydin\Desktop\CSOtomasyon\massTurSqlite\massTurSqlite\data\massTur.db" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Kullanici">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="kAdi" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="sifre" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Musteri">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TCMusteriNo" Type="nvarchar" MaxLength="20" />
+    <Property Name="turu" Type="nvarchar" MaxLength="50" />
+    <Property Name="vatandas" Type="bit" />
+    <Property Name="basvuruTipi" Type="nvarchar" MaxLength="20" />
+    <Property Name="ad" Type="nvarchar" MaxLength="100" />
+    <Property Name="soyad" Type="nvarchar" MaxLength="100" />
+    <Property Name="cinsiyet" Type="nvarchar" MaxLength="25" />
+    <Property Name="dogumYer" Type="nvarchar" MaxLength="50" />
+    <Property Name="dogumTarih" Type="datetime" Nullable="false" />
+    <Property Name="anneAd" Type="nvarchar" MaxLength="100" />
+    <Property Name="babaAd" Type="nvarchar" MaxLength="100" />
+    <Property Name="cepTel" Type="nvarchar" MaxLength="200" />
+    <Property Name="medeniDurum" Type="nvarchar" MaxLength="20" />
+    <Property Name="acilNo" Type="nvarchar" MaxLength="20" />
+    <Property Name="acilAd" Type="nvarchar" MaxLength="200" />
+    <Property Name="acilYakinlik" Type="nvarchar" MaxLength="50" />
+    <Property Name="ogrenci" Type="bit" />
+    <Property Name="ogrenciBelge" Type="bit" />
+    <Property Name="adres" Type="nvarchar" MaxLength="500" />
+    <Property Name="faturaAdres" Type="nvarchar" MaxLength="500" />
+    <Property Name="passID" Type="integer" />
+    <Property Name="aktif" Type="bit" />
+    <Property Name="grup" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Tur">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ad" Type="nvarchar" MaxLength="50" />
+    <Property Name="tipID" Type="integer" />
+    <Property Name="kod" Type="nvarchar" MaxLength="50" />
+    <Property Name="kapasite" Type="integer" />
+    <Property Name="sezonID" Type="integer" />
+    <Property Name="basTarih" Type="datetime" />
+    <Property Name="bitTarih" Type="datetime" />
+    <Property Name="durum" Type="integer" />
+    <Property Name="onKayit" Type="bit" />
+    <Property Name="ulke" Type="nvarchar" MaxLength="80" />
+    <Property Name="sehir" Type="nvarchar" MaxLength="80" />
+    <Property Name="donemID" Type="integer" />
+    <Property Name="aciklama" Type="nvarchar" MaxLength="500" />
+    <Property Name="kesinKayitLimit" Type="integer" />
+    <Property Name="aktif" Type="bit" />
+  </EntityType>
+  <EntityType Name="TurMusteri">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="turID" Type="integer" Nullable="false" />
+    <Property Name="musteriID" Type="integer" Nullable="false" />
+  </EntityType>
+  <EntityContainer Name="massTurModelStoreContainer">
+    <EntitySet Name="Kullanici" EntityType="Self.Kullanici" store:Type="Tables" />
+    <EntitySet Name="Musteri" EntityType="Self.Musteri" store:Type="Tables" />
+    <EntitySet Name="Tur" EntityType="Self.Tur" store:Type="Tables" />
+    <EntitySet Name="TurMusteri" EntityType="Self.TurMusteri" store:Type="Tables" />
+  </EntityContainer>
+</Schema>

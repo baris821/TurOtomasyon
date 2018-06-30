@@ -1,0 +1,485 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="massTurModel.Store" Provider="System.Data.SQLite.EF6" ProviderManifestToken="data source=C:\Users\alpaydin\Desktop\CSOtomasyon\massTurSqlite\massTurSqlite\data\massTur.db" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Donem">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="integer" Nullable="false" />
+          <Property Name="ad" Type="nvarchar" MaxLength="50" />
+          <Property Name="aktif" Type="bit" />
+        </EntityType>
+        <EntityType Name="Musteri">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TCMusteriNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="turu" Type="nvarchar" MaxLength="50" />
+          <Property Name="vatandas" Type="bit" />
+          <Property Name="basvuruTipi" Type="nvarchar" MaxLength="50" />
+          <Property Name="ad" Type="nvarchar" MaxLength="100" />
+          <Property Name="soyad" Type="nvarchar" MaxLength="100" />
+          <Property Name="cinsiyet" Type="nvarchar" MaxLength="10" />
+          <Property Name="dogumYer" Type="nvarchar" MaxLength="100" />
+          <Property Name="dogumTarih" Type="datetime" />
+          <Property Name="anneAd" Type="nvarchar" MaxLength="100" />
+          <Property Name="babaAd" Type="nvarchar" MaxLength="100" />
+          <Property Name="cepTel" Type="nvarchar" MaxLength="20" />
+          <Property Name="medeniDurum" Type="nvarchar" MaxLength="50" />
+          <Property Name="acilNo" Type="nvarchar" MaxLength="20" />
+          <Property Name="acilAd" Type="nvarchar" MaxLength="200" />
+          <Property Name="acilYakinlik" Type="nvarchar" MaxLength="100" />
+          <Property Name="ogrenci" Type="bit" />
+          <Property Name="ogrenciBelge" Type="bit" />
+          <Property Name="adres" Type="nvarchar" MaxLength="500" />
+          <Property Name="faturaAdres" Type="nvarchar" MaxLength="500" />
+          <Property Name="passID" Type="integer" />
+          <Property Name="aktif" Type="bit" />
+          <Property Name="grup" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Parkur">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="integer" Nullable="false" />
+          <Property Name="sehir" Type="nvarchar" MaxLength="50" />
+          <Property Name="ulasim" Type="nvarchar" MaxLength="50" />
+          <Property Name="sira" Type="int" />
+          <Property Name="konaklama" Type="bit" />
+          <Property Name="TurID" Type="integer" />
+        </EntityType>
+        <EntityType Name="Sezon">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="integer" Nullable="false" />
+          <Property Name="ad" Type="nvarchar" MaxLength="50" />
+          <Property Name="aktif" Type="bit" />
+        </EntityType>
+        <EntityType Name="Tur">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ad" Type="nvarchar" MaxLength="100" />
+          <Property Name="tipID" Type="integer" />
+          <Property Name="kod" Type="nvarchar" MaxLength="50" />
+          <Property Name="kapasite" Type="int" />
+          <Property Name="sezonID" Type="integer" />
+          <Property Name="basTarih" Type="datetime" />
+          <Property Name="bitTarih" Type="datetime" />
+          <Property Name="durum" Type="nvarchar" MaxLength="100" />
+          <Property Name="ulke" Type="nvarchar" MaxLength="100" />
+          <Property Name="sehir" Type="nvarchar" MaxLength="100" />
+          <Property Name="donemID" Type="integer" />
+          <Property Name="aciklama" Type="nvarchar" MaxLength="500" />
+          <Property Name="kesinKayitLimit" Type="int" />
+          <Property Name="aktif" Type="bit" />
+        </EntityType>
+        <EntityType Name="Tur_Musteri">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="turID" Type="integer" />
+          <Property Name="musteriID" Type="integer" />
+        </EntityType>
+        <Association Name="FK_Parkur_0_0">
+          <End Role="Tur" Type="Self.Tur" Multiplicity="0..1" />
+          <End Role="Parkur" Type="Self.Parkur" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tur">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Parkur">
+              <PropertyRef Name="TurID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tur_0_0">
+          <End Role="Donem" Type="Self.Donem" Multiplicity="0..1" />
+          <End Role="Tur" Type="Self.Tur" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Donem">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Tur">
+              <PropertyRef Name="donemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tur_1_0">
+          <End Role="Sezon" Type="Self.Sezon" Multiplicity="0..1" />
+          <End Role="Tur" Type="Self.Tur" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sezon">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Tur">
+              <PropertyRef Name="sezonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tur_Musteri_0_0">
+          <End Role="Musteri" Type="Self.Musteri" Multiplicity="0..1" />
+          <End Role="Tur_Musteri" Type="Self.Tur_Musteri" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Musteri">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Tur_Musteri">
+              <PropertyRef Name="musteriID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tur_Musteri_1_0">
+          <End Role="Tur" Type="Self.Tur" Multiplicity="0..1" />
+          <End Role="Tur_Musteri" Type="Self.Tur_Musteri" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tur">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Tur_Musteri">
+              <PropertyRef Name="turID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="massTurModelStoreContainer">
+          <EntitySet Name="Donem" EntityType="Self.Donem" store:Type="Tables" />
+          <EntitySet Name="Musteri" EntityType="Self.Musteri" store:Type="Tables" />
+          <EntitySet Name="Parkur" EntityType="Self.Parkur" store:Type="Tables" />
+          <EntitySet Name="Sezon" EntityType="Self.Sezon" store:Type="Tables" />
+          <EntitySet Name="Tur" EntityType="Self.Tur" store:Type="Tables" />
+          <EntitySet Name="Tur_Musteri" EntityType="Self.Tur_Musteri" store:Type="Tables" />
+          <AssociationSet Name="FK_Parkur_0_0" Association="Self.FK_Parkur_0_0">
+            <End Role="Tur" EntitySet="Tur" />
+            <End Role="Parkur" EntitySet="Parkur" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tur_0_0" Association="Self.FK_Tur_0_0">
+            <End Role="Donem" EntitySet="Donem" />
+            <End Role="Tur" EntitySet="Tur" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tur_1_0" Association="Self.FK_Tur_1_0">
+            <End Role="Sezon" EntitySet="Sezon" />
+            <End Role="Tur" EntitySet="Tur" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tur_Musteri_0_0" Association="Self.FK_Tur_Musteri_0_0">
+            <End Role="Musteri" EntitySet="Musteri" />
+            <End Role="Tur_Musteri" EntitySet="Tur_Musteri" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tur_Musteri_1_0" Association="Self.FK_Tur_Musteri_1_0">
+            <End Role="Tur" EntitySet="Tur" />
+            <End Role="Tur_Musteri" EntitySet="Tur_Musteri" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="massTurModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Musteri">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TCMusteriNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="turu" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="vatandas" Type="Boolean" />
+          <Property Name="basvuruTipi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ad" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="soyad" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="cinsiyet" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="dogumYer" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="dogumTarih" Type="DateTime" />
+          <Property Name="anneAd" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="babaAd" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="cepTel" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="medeniDurum" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="acilNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="acilAd" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="acilYakinlik" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ogrenci" Type="Boolean" />
+          <Property Name="ogrenciBelge" Type="Boolean" />
+          <Property Name="adres" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="faturaAdres" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="passID" Type="Int64" />
+          <Property Name="aktif" Type="Boolean" />
+          <Property Name="grup" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Tur_Musteri" Relationship="Self.FK_Tur_Musteri_0_0" FromRole="Musteri" ToRole="Tur_Musteri" />
+        </EntityType>
+        <EntityType Name="Tur">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ad" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="tipID" Type="Int64" />
+          <Property Name="kod" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="kapasite" Type="Int32" />
+          <Property Name="sezonID" Type="Int64" />
+          <Property Name="basTarih" Type="DateTime" />
+          <Property Name="bitTarih" Type="DateTime" />
+          <Property Name="durum" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ulke" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="sehir" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="donemID" Type="Int64" />
+          <Property Name="aciklama" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="kesinKayitLimit" Type="Int32" />
+          <Property Name="aktif" Type="Boolean" />
+          <NavigationProperty Name="Tur_Musteri" Relationship="Self.FK_Tur_Musteri_1_0" FromRole="Tur" ToRole="Tur_Musteri" />
+          <NavigationProperty Name="Donem" Relationship="massTurModel.FK_Tur_0_0" FromRole="Tur" ToRole="Donem" />
+          <NavigationProperty Name="Sezon" Relationship="massTurModel.FK_Tur_1_0" FromRole="Tur" ToRole="Sezon" />
+          <NavigationProperty Name="Parkur" Relationship="massTurModel.FK_Parkur_0_0" FromRole="Tur" ToRole="Parkur" />
+        </EntityType>
+        <EntityType Name="Tur_Musteri">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="turID" Type="Int64" />
+          <Property Name="musteriID" Type="Int64" />
+          <NavigationProperty Name="Musteri" Relationship="Self.FK_Tur_Musteri_0_0" FromRole="Tur_Musteri" ToRole="Musteri" />
+          <NavigationProperty Name="Tur" Relationship="Self.FK_Tur_Musteri_1_0" FromRole="Tur_Musteri" ToRole="Tur" />
+        </EntityType>
+        <Association Name="FK_Tur_Musteri_0_0">
+          <End Role="Musteri" Type="Self.Musteri" Multiplicity="0..1" />
+          <End Role="Tur_Musteri" Type="Self.Tur_Musteri" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Musteri">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Tur_Musteri">
+              <PropertyRef Name="musteriID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tur_Musteri_1_0">
+          <End Role="Tur" Type="Self.Tur" Multiplicity="0..1" />
+          <End Role="Tur_Musteri" Type="Self.Tur_Musteri" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tur">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Tur_Musteri">
+              <PropertyRef Name="turID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="massTurEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Musteri" EntityType="Self.Musteri" />
+          <EntitySet Name="Tur" EntityType="Self.Tur" />
+          <EntitySet Name="Tur_Musteri" EntityType="Self.Tur_Musteri" />
+          <AssociationSet Name="FK_Tur_Musteri_0_0" Association="Self.FK_Tur_Musteri_0_0">
+            <End Role="Musteri" EntitySet="Musteri" />
+            <End Role="Tur_Musteri" EntitySet="Tur_Musteri" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tur_Musteri_1_0" Association="Self.FK_Tur_Musteri_1_0">
+            <End Role="Tur" EntitySet="Tur" />
+            <End Role="Tur_Musteri" EntitySet="Tur_Musteri" />
+          </AssociationSet>
+          <EntitySet Name="Donem" EntityType="massTurModel.Donem" />
+          <EntitySet Name="Sezon" EntityType="massTurModel.Sezon" />
+          <AssociationSet Name="FK_Tur_0_0" Association="massTurModel.FK_Tur_0_0">
+            <End Role="Donem" EntitySet="Donem" />
+            <End Role="Tur" EntitySet="Tur" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tur_1_0" Association="massTurModel.FK_Tur_1_0">
+            <End Role="Sezon" EntitySet="Sezon" />
+            <End Role="Tur" EntitySet="Tur" />
+          </AssociationSet>
+          <EntitySet Name="Parkur" EntityType="massTurModel.Parkur" />
+          <AssociationSet Name="FK_Parkur_0_0" Association="massTurModel.FK_Parkur_0_0">
+            <End Role="Tur" EntitySet="Tur" />
+            <End Role="Parkur" EntitySet="Parkur" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Donem">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" />
+          <Property Name="ad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="aktif" Type="Boolean" />
+          <NavigationProperty Name="Tur" Relationship="massTurModel.FK_Tur_0_0" FromRole="Donem" ToRole="Tur" />
+        </EntityType>
+        <EntityType Name="Sezon">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" />
+          <Property Name="ad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="aktif" Type="Boolean" />
+          <NavigationProperty Name="Tur" Relationship="massTurModel.FK_Tur_1_0" FromRole="Sezon" ToRole="Tur" />
+        </EntityType>
+        <Association Name="FK_Tur_0_0">
+          <End Type="massTurModel.Donem" Role="Donem" Multiplicity="0..1" />
+          <End Type="massTurModel.Tur" Role="Tur" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Donem">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Tur">
+              <PropertyRef Name="donemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tur_1_0">
+          <End Type="massTurModel.Sezon" Role="Sezon" Multiplicity="0..1" />
+          <End Type="massTurModel.Tur" Role="Tur" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sezon">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Tur">
+              <PropertyRef Name="sezonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Parkur">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" />
+          <Property Name="sehir" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ulasim" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="sira" Type="Int32" />
+          <Property Name="konaklama" Type="Boolean" />
+          <Property Name="TurID" Type="Int64" />
+          <NavigationProperty Name="Tur" Relationship="massTurModel.FK_Parkur_0_0" FromRole="Parkur" ToRole="Tur" />
+        </EntityType>
+        <Association Name="FK_Parkur_0_0">
+          <End Type="massTurModel.Tur" Role="Tur" Multiplicity="0..1" />
+          <End Type="massTurModel.Parkur" Role="Parkur" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tur">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Parkur">
+              <PropertyRef Name="TurID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="massTurModelStoreContainer" CdmEntityContainer="massTurEntities">
+          <EntitySetMapping Name="Musteri">
+            <EntityTypeMapping TypeName="massTurModel.Musteri">
+              <MappingFragment StoreEntitySet="Musteri">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="TCMusteriNo" ColumnName="TCMusteriNo" />
+                <ScalarProperty Name="turu" ColumnName="turu" />
+                <ScalarProperty Name="vatandas" ColumnName="vatandas" />
+                <ScalarProperty Name="basvuruTipi" ColumnName="basvuruTipi" />
+                <ScalarProperty Name="ad" ColumnName="ad" />
+                <ScalarProperty Name="soyad" ColumnName="soyad" />
+                <ScalarProperty Name="cinsiyet" ColumnName="cinsiyet" />
+                <ScalarProperty Name="dogumYer" ColumnName="dogumYer" />
+                <ScalarProperty Name="dogumTarih" ColumnName="dogumTarih" />
+                <ScalarProperty Name="anneAd" ColumnName="anneAd" />
+                <ScalarProperty Name="babaAd" ColumnName="babaAd" />
+                <ScalarProperty Name="cepTel" ColumnName="cepTel" />
+                <ScalarProperty Name="medeniDurum" ColumnName="medeniDurum" />
+                <ScalarProperty Name="acilNo" ColumnName="acilNo" />
+                <ScalarProperty Name="acilAd" ColumnName="acilAd" />
+                <ScalarProperty Name="acilYakinlik" ColumnName="acilYakinlik" />
+                <ScalarProperty Name="ogrenci" ColumnName="ogrenci" />
+                <ScalarProperty Name="ogrenciBelge" ColumnName="ogrenciBelge" />
+                <ScalarProperty Name="adres" ColumnName="adres" />
+                <ScalarProperty Name="faturaAdres" ColumnName="faturaAdres" />
+                <ScalarProperty Name="passID" ColumnName="passID" />
+                <ScalarProperty Name="aktif" ColumnName="aktif" />
+                <ScalarProperty Name="grup" ColumnName="grup" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tur">
+            <EntityTypeMapping TypeName="massTurModel.Tur">
+              <MappingFragment StoreEntitySet="Tur">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="ad" ColumnName="ad" />
+                <ScalarProperty Name="tipID" ColumnName="tipID" />
+                <ScalarProperty Name="kod" ColumnName="kod" />
+                <ScalarProperty Name="kapasite" ColumnName="kapasite" />
+                <ScalarProperty Name="sezonID" ColumnName="sezonID" />
+                <ScalarProperty Name="basTarih" ColumnName="basTarih" />
+                <ScalarProperty Name="bitTarih" ColumnName="bitTarih" />
+                <ScalarProperty Name="durum" ColumnName="durum" />
+                <ScalarProperty Name="ulke" ColumnName="ulke" />
+                <ScalarProperty Name="sehir" ColumnName="sehir" />
+                <ScalarProperty Name="donemID" ColumnName="donemID" />
+                <ScalarProperty Name="aciklama" ColumnName="aciklama" />
+                <ScalarProperty Name="kesinKayitLimit" ColumnName="kesinKayitLimit" />
+                <ScalarProperty Name="aktif" ColumnName="aktif" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tur_Musteri">
+            <EntityTypeMapping TypeName="massTurModel.Tur_Musteri">
+              <MappingFragment StoreEntitySet="Tur_Musteri">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="turID" ColumnName="turID" />
+                <ScalarProperty Name="musteriID" ColumnName="musteriID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Donem">
+            <EntityTypeMapping TypeName="massTurModel.Donem">
+              <MappingFragment StoreEntitySet="Donem">
+                <ScalarProperty Name="aktif" ColumnName="aktif" />
+                <ScalarProperty Name="ad" ColumnName="ad" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sezon">
+            <EntityTypeMapping TypeName="massTurModel.Sezon">
+              <MappingFragment StoreEntitySet="Sezon">
+                <ScalarProperty Name="aktif" ColumnName="aktif" />
+                <ScalarProperty Name="ad" ColumnName="ad" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Parkur">
+            <EntityTypeMapping TypeName="massTurModel.Parkur">
+              <MappingFragment StoreEntitySet="Parkur">
+                <ScalarProperty Name="TurID" ColumnName="TurID" />
+                <ScalarProperty Name="konaklama" ColumnName="konaklama" />
+                <ScalarProperty Name="sira" ColumnName="sira" />
+                <ScalarProperty Name="ulasim" ColumnName="ulasim" />
+                <ScalarProperty Name="sehir" ColumnName="sehir" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
